@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agri Tech Solution Portal — Demo</title>
+  <meta name="description" content="AgriTech demo: drone farming, automated irrigation, soil image analysis, multilingual voice & text assistant." />
+  <style>
+    :root{
+      --bg:#F5F7F2; --primary:#2F7A4A; --accent:#7FC08A; --cta:#FFB74D; --muted:#556;
+      --card:#ffffff; --radius:12px; --maxw:1100px;
+      font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:linear-gradient(180deg,var(--bg),#eef3ea);
+      color:#123; -webkit-font-smoothing:antialiased; padding:20px; display:flex; justify-content:center;
+    }
+    .wrap{width:100%;max-width:var(--maxw)}
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 8px}
+    .logo{display:flex;gap:10px;align-items:center}
+    .mark{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));display:grid;place-items:center;color:white;font-weight:800}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .cta{background:var(--primary);color:white;padding:10px 14px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .lang-select{padding:8px;border-radius:8px;border:1px solid #ddd;background:#fff}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;padding:18px}
+    .hero h1{font-size:26px;margin:0 0 8px}
+    .tag{color:var(--muted);margin-bottom:10px}
+    .actions{display:flex;gap:12px}
+    .btn-secondary{background:transparent;border:2px solid var(--primary);color:var(--primary);padding:10px 14px;border-radius:10px;cursor:pointer}
+
+    /* main sections */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .card{background:var(--card);padding:14px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(18,34,18,0.04);transition:transform .22s}
+    .card:hover, .card:focus-within{transform:translateY(-6px)}
+    .stat{font-weight:800;color:var(--primary);margin-top:8px}
+    .learn{background:transparent;border:none;color:var(--primary);font-weight:700;cursor:pointer;padding:6px}
+
+    .how{margin-top:20px;padding:14px;border-radius:12px;background:linear-gradient(90deg,#fff,#f7fbf6)}
+    .steps{display:flex;gap:12px;justify-content:space-between}
+    .step{flex:1;padding:12px;border-radius:10px;text-align:center}
+
+    /* demo */
+    .demo{display:grid;grid-template-columns:360px 1fr;gap:14px;margin-top:18px}
+    .panel{background:var(--card);padding:12px;border-radius:12px}
+    .metric{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #eee}
+    .chart{height:180px;border-radius:8px;background:linear-gradient(180deg,#fff,#f2f7f2);display:grid;place-items:center}
+
+    /* soil analyzer */
+    .soil-area{display:grid;grid-template-columns:1fr;gap:10px}
+    .upload-box{border:2px dashed #d9e9d6;border-radius:10px;padding:12px;text-align:center;background:#fbfff9}
+    .micro {display:flex;gap:8px;align-items:center}
+
+    /* assistant area */
+    .assistant{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+    .input-text{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd}
+    .mic-btn{padding:10px;border-radius:8px;background:var(--accent);border:none;cursor:pointer;font-weight:700}
+
+    footer{margin-top:20px;padding:16px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#f3f7f1);display:flex;justify-content:space-between;align-items:center}
+
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr 320px}
+      .features{grid-template-columns:1fr}
+      .demo{grid-template-columns:1fr}
+    }
+    @media(max-width:540px){
+      .hero{grid-template-columns:1fr}
+      .hero-right{order:-1}
+    }
+
+    /* small */
+    button:focus,input:focus,select:focus{outline:3px solid rgba(127,192,138,0.25);outline-offset:3px}
+    .small{font-size:13px;color:var(--muted)}
+    .lang-flag{font-weight:700;padding:6px 8px;border-radius:8px;background:#fff;border:1px solid #eee}
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="logo">
+        <div class="mark" aria-hidden="true">Ag</div>
+        <div>
+          <div style="font-weight:800">AgriTech Portal</div>
+          <small class="small">AI demo • Multilingual • Soil analysis (simulated)</small>
+        </div>
+      </div>
+
+      <nav aria-label="Main Navigation">
+        <a href="#features">Features</a>
+        <a href="#how">How</a>
+        <a href="#demo">Demo</a>
+        <select id="lang" class="lang-select" aria-label="Language selector">
+          <option value="en">English</option>
+          <option value="te">Telugu</option>
+          <option value="hi">Hindi</option>
+        </select>
+        <button class="cta" id="requestDemo">Request Demo</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Smart AgriTech Solution Portal</h1>
+        <div class="tag" id="hero-sub">Showcasing drone farming, automated irrigation and soil-health monitoring.</div>
+        <p id="hero-desc">An easy-to-use web demo that helps farmers with soil analysis, crop suggestions, voice assistant and multilingual support.</p>
+
+        <div class="actions">
+          <button class="cta" onclick="scrollTo('features')">Explore Features</button>
+          <button class="btn-secondary" onclick="scrollTo('demo')">View Demo</button>
+        </div>
+
+        <!-- assistant quick area -->
+        <div style="margin-top:16px">
+          <div class="small">Ask the assistant (type or use mic):</div>
+          <div class="assistant" role="region" aria-label="Assistant">
+            <input id="userInput" class="input-text" placeholder="Ask: Which crop should I plant in June?" />
+            <button id="micBtn" class="mic-btn" title="Speak" aria-pressed="false">🎤</button>
+            <button id="askBtn" class="mic-btn" title="Ask">Ask</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div style="border-radius:12px;padding:12px;background:linear-gradient(180deg,#fff,#f7fff4)">
+          <strong>Highlights</strong>
+          <ul style="margin:8px 0 0 16px;color:var(--muted)">
+            <li>Soil image analyzer (simulated)</li>
+            <li>Crop suggestion by season</li>
+            <li>Mic + TTS & Multilingual replies</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="features" aria-label="Key features">
+      <article class="card" tabindex="0">
+        <h3>Drone Farming</h3>
+        <p>High-resolution mapping and precision spraying for efficient inputs and pest detection.</p>
+        <div class="stat">+20% possible yield</div>
+        <button class="learn" onclick="openModal('drone')">Learn more →</button>
+      </article>
+
+      <article class="card" tabindex="0">
+        <h3>Automated Irrigation</h3>
+        <p>Sensor-triggered irrigation and scheduling to reduce water use and labor.</p>
+        <div class="stat">-30% water</div>
+        <button class="learn" onclick="openModal('irri')">Learn more →</button>
+      </article>
+
+      <article class="card" tabindex="0">
+        <h3>Soil Health Monitoring</h3>
+        <p>Upload soil images for a simulated analysis: soil type, nutrient hints and suggestions.</p>
+        <div class="stat">Better decisions</div>
+        <button class="learn" onclick="scrollTo('demo')">Try Demo →</button>
+      </article>
+    </section>
+
+    <!-- HOW -->
+    <section id="how" class="how" aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
+      <div class="steps" role="list">
+        <div class="step" role="listitem"><strong>Detect</strong><p class="small">Drones & sensors gather field data.</p></div>
+        <div class="step" role="listitem"><strong>Analyze</strong><p class="small">Portal processes data and gives recommendations.</p></div>
+        <div class="step" role="listitem"><strong>Act</strong><p class="small">Automated irrigation or farmer action follows insights.</p></div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section id="demo" class="demo" aria-labelledby="demo-title">
+      <div class="panel" aria-hidden="false">
+        <h3 id="demo-title">Interactive Demo</h3>
+
+        <!-- region / stats -->
+        <label for="regionSelect" class="small">Select region:</label>
+        <select id="regionSelect" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd">
+        </select>
+
+        <div id="demoStats" style="margin-top:12px"></div>
+
+        <hr style="margin:12px 0">
+
+        <!-- soil upload & analyzer -->
+        <div class="soil-area">
+          <div class="small">Soil Image Analyzer (upload an image of soil)</div>
+          <div class="upload-box" id="uploadBox">
+            <input type="file" id="soilFile" accept="image/*" aria-label="Upload soil image" />
+            <div class="small" style="margin-top:8px">After upload, the portal will simulate soil type and nutrient suggestions.</div>
+          </div>
+          <div id="soilResult" class="small" style="padding:8px"></div>
+          <canvas id="soilCanvas" style="display:none"></canvas>
+        </div>
+
+        <div style="margin-top:10px">
+          <label for="monthSelect" class="small">Select month/season for crop suggestion:</label>
+          <select id="monthSelect" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd">
+            <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+            <option value="4">April</option><option value="5">May</option><option value="6" selected>June</option>
+            <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+            <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+          </select>
+          <div id="cropSuggestion" class="small" style="margin-top:8px"></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button id="simulateBtn" class="cta">Simulate Action</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel card">
+          <h4>Field Snapshot</h4>
+          <div id="chartArea" class="chart" aria-live="polite">No region selected</div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <strong>Assistant Response</strong>
+          <div id="assistantOut" style="margin-top:8px;color:var(--muted)">The assistant will reply here (text & voice).</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <strong>Testimonials</strong>
+      <div style="margin-top:8px" class="small">“Using tech, we reduced water usage and improved yields.” — Farmer Raju</div>
+    </section>
+
+    <footer>
+      <div><strong>AgriTech Demo</strong><div class="small">Frontend demo • No backend / simulation only</div></div>
+      <div><a href="#contact">Contact</a></div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" role="dialog" aria-modal="true" aria-hidden="true" style="position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,0.35)">
+    <div role="document" style="width:min(640px,94%);background:white;padding:18px;border-radius:12px;">
+      <button id="modalClose" style="float:right;border:none;background:transparent;font-weight:700;cursor:pointer">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    /******************************
+     * Data & Translations
+     ******************************/
+    const translations = {
+      en: {
+        heroSub: "Showcasing drone farming, automated irrigation and soil-health monitoring.",
+        heroDesc: "An easy-to-use web demo that helps farmers with soil analysis, crop suggestions, voice assistant and multilingual support.",
+        simulateAction: "Simulate Action",
+        assistantDefault: "The assistant will reply here (text & voice).",
+        soilAnalyzeHeading: "Soil Analysis (simulated)",
+        cropSuggestionHeading: "Crop suggestions"
+      },
+      te: {
+        heroSub: "డ్రోన్ వ్యవసాయం, స్వయంచాలక సాగు, మరియు మట్టి ఆరోగ్య పర్యవేక్షణ చూపిస్తోంది.",
+        heroDesc: "రైతులకు మట్టి విశ్లేషణ, పంట సూచనలు, వాయిస్ అసిస్టెంట్ మరియు బహుముఖ భాషా మద్దతు కలిగిన వెబ్ డెమో.",
+        simulateAction: "సిమ్యులేట్ క్రియ",
+        assistantDefault: "సహాయకుడు ఇక్కడ టెక్స్ట్ & వాయిస్‌లో ప్రతిస్పందిస్తాడు.",
+        soilAnalyzeHeading: "మట్టి విశ్లేషణ (సిమ్యులేటెడ్)",
+        cropSuggestionHeading: "పంట సూచనలు"
+      },
+      hi: {
+        heroSub: "ड्रोन खेती, ऑटोमेटेड सिंचाई और मिट्टी स्वास्थ्य निगरानी दिखा रहा है।",
+        heroDesc: "किसानों के लिए मिट्टी विश्लेषण, फसल सुझाव, वॉइस असिस्टेंट और बहुभाषी समर्थन वाला वेब डेमो।",
+        simulateAction: "सिमुलेट क्रिया",
+        assistantDefault: "सहायक यहाँ टेक्स्ट और वॉइस में उत्तर देगा।",
+        soilAnalyzeHeading: "मिट्टी विश्लेषण (नकली)",
+        cropSuggestionHeading: "फसल सुझाव"
+      }
+    };
+
+    const regionData = {
+      "North Farm": {temp:30, soilPH:6.5, moisture:34, suggestion:'Start light irrigation', yield:120},
+      "East Orchard": {temp:28, soilPH:5.8, moisture:22, suggestion:'Apply lime and schedule irrigation', yield:95},
+      "South Field": {temp:32, soilPH:7.1, moisture:40, suggestion:'Monitor pests, reduce water', yield:140}
+    };
+
+    const cropByMonth = {
+      // simplistic mapping
+      1: ["Wheat", "Mustard"], 2: ["Wheat", "Chickpea"], 3: ["Maize", "Groundnut"],
+      4: ["Rice (Nursery)", "Cotton"], 5: ["Rice", "Sugarcane"], 6: ["Rice (Kharif)","Millets"],
+      7: ["Rice", "Soybean"], 8: ["Rice", "Maize"], 9: ["Pulses", "Soybean"],
+      10:["Wheat (Rabi)", "Mustard"], 11:["Wheat", "Barley"], 12:["Wheat", "Vegetables"]
+    };
+
+    /******************************
+     * Helpers & Initialization
+     ******************************/
+    const langSelect = document.getElementById('lang');
+    const heroSub = document.getElementById('hero-sub');
+    const heroDesc = document.getElementById('hero-desc');
+    const assistantOut = document.getElementById('assistantOut');
+    const demoStats = document.getElementById('demoStats');
+    const regionSelect = document.getElementById('regionSelect');
+    const chartArea = document.getElementById('chartArea');
+    const cropSuggestion = document.getElementById('cropSuggestion');
+    const monthSelect = document.getElementById('monthSelect');
+    const simulateBtn = document.getElementById('simulateBtn');
+    const soilFile = document.getElementById('soilFile');
+    const soilResult = document.getElementById('soilResult');
+    const soilCanvas = document.getElementById('soilCanvas');
+    const micBtn = document.getElementById('micBtn');
+    const userInput = document.getElementById('userInput');
+    const askBtn = document.getElementById('askBtn');
+
+    // initial language
+    let currentLang = 'en';
+    function setLang(lang){
+      currentLang = lang;
+      const t = translations[lang] || translations.en;
+      heroSub.textContent = t.heroSub;
+      heroDesc.textContent = t.heroDesc;
+      assistantOut.textContent = t.assistantDefault;
+      // update button text if you want
+      simulateBtn.textContent = t.simulateAction;
+      document.getElementById('demo-title').textContent = t.soilAnalyzeHeading;
+      // crop heading not shown separately but used below
+      renderStats(regionSelect.value);
+      renderCropSuggestion();
+    }
+    langSelect.addEventListener('change', ()=>setLang(langSelect.value));
+    setLang('en');
+
+    // populate regions
+    function initRegions(){
+      Object.keys(regionData).forEach((r,i)=>{
+        const opt = document.createElement('option'); opt.value=r; opt.textContent=r; if(i===0) opt.selected=true;
+        regionSelect.appendChild(opt);
+      });
+      renderStats(regionSelect.value);
+    }
+    initRegions();
+
+    // render region stats & simple chart
+    function renderStats(region){
+      const d = regionData[region];
+      demoStats.innerHTML = '';
+      const metrics = [['Temperature', d.temp+'°C'], ['Soil pH', d.soilPH], ['Moisture', d.moisture+'%'], ['Suggestion', d.suggestion]];
+      metrics.forEach(m=>{
+        const el = document.createElement('div'); el.className='metric';
+        el.innerHTML = `<div style="font-weight:700">${m[0]}</div><div style="color:var(--muted)">${m[1]}</div>`;
+        demoStats.appendChild(el);
+      });
+
+      // simple visualization
+      chartArea.innerHTML = '';
+      const c = document.createElement('div'); c.style.display='flex'; c.style.alignItems='end'; c.style.gap='6px'; c.style.padding='12px'; c.style.width='100%';
+      const datapoints = [d.moisture, 100-d.moisture, d.soilPH*10];
+      datapoints.forEach((dp, idx)=>{
+        const bar = document.createElement('div');
+        bar.style.width = '22px';
+        bar.style.height = Math.max(12, dp) + 'px';
+        bar.style.borderRadius = '6px';
+        bar.style.background = idx===0 ? 'linear-gradient(180deg,var(--accent),var(--primary))' : '#ddd';
+        c.appendChild(bar);
+      });
+      chartArea.appendChild(c);
+    }
+    regionSelect.addEventListener('change', ()=>renderStats(regionSelect.value));
+
+    // crop suggestion by month
+    function renderCropSuggestion(){
+      const month = parseInt(monthSelect.value,10);
+      const list = cropByMonth[month] || [];
+      const localized = list.map(s => localizeCrop(s)).join(' • ');
+      cropSuggestion.innerHTML = `<strong>${translations[currentLang].cropSuggestionHeading}:</strong> <div style="color:var(--muted)">${localized}</div>`;
+    }
+    monthSelect.addEventListener('change', renderCropSuggestion);
+    renderCropSuggestion();
+
+    function localizeCrop(name){
+      // simple mapping for demo (could be expanded)
+      const map = {
+        'Wheat': {'en':'Wheat','te':'గోధుమ','hi':'गेहूं'},
+        'Mustard': {'en':'Mustard','te':'సర్సేపు','hi':'सरसों'},
+        'Chickpea': {'en':'Chickpea','te':'సెనగ','hi':'चना'},
+        'Maize': {'en':'Maize','te':'మొక్కజొన్న','hi':'मक्का'},
+        'Groundnut': {'en':'Groundnut','te':'వేరుశనగ','hi':'मूंगफली'},
+        'Rice': {'en':'Rice','te':'అన్నం','hi':'चावल'},
+        'Cotton': {'en':'Cotton','te':'పత్తి','hi':'कपास'},
+        'Sugarcane': {'en':'Sugarcane','te':'కందిపెట్టు','hi':'गन्ना'},
+        'Millets': {'en':'Millets','te':'జొన్నలు','hi':'बाजरा'},
+        'Soybean': {'en':'Soybean','te':'సోయా బీన్స్','hi':'सोयाबीन'},
+        'Pulses': {'en':'Pulses','te':'పప్పులు','hi':'दालें'},
+        'Barley': {'en':'Barley','te':'బార్లీ','hi':'जौ'},
+        'Vegetables': {'en':'Vegetables','te':'కూరగాయలు','hi':'सब्जियाँ'}
+      };
+      return (map[name] && map[name][currentLang]) || name;
+    }
+
+    // simulate action button
+    simulateBtn.addEventListener('click', ()=>{
+      const r = regionSelect.value; const d = regionData[r];
+      speakAndShow(`${r}: ${d.suggestion}`);
+      alert(`${r}: ${d.suggestion}`);
+    });
+
+    /******************************
+     * Soil Image Analyzer (simulated)
+     * Approach: load image into canvas -> compute average RGB -> decide soil type roughly
+     ******************************/
+    soilFile.addEventListener('change', (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        img.onload = function(){
+          // draw on canvas scaled
+          const max = 200;
+          const canvas = soilCanvas;
+          const ctx = canvas.getContext('2d');
+          let w = img.width, h = img.height;
+          if(w > max){ h = h * (max / w); w = max; }
+          if(h > max){ w = w * (max / h); h = max; }
+          canvas.width = w; canvas.height = h;
+          ctx.drawImage(img, 0, 0, w, h);
+          try{
+            const imgData = ctx.getImageData(0,0,w,h).data;
+            // compute average color
+            let r=0,g=0,b=0,count=0;
+            for(let i=0;i<imgData.length;i+=4){
+              r += imgData[i]; g += imgData[i+1]; b += imgData[i+2]; count++;
+            }
+            r = Math.round(r/count); g = Math.round(g/count); b = Math.round(b/count);
+            // brightness
+            const brightness = (r+g+b)/3;
+            // crude classification:
+            let soilType = 'Loamy'; // default
+            if(brightness > 170) soilType = 'Sandy';
+            else if(brightness < 90) soilType = 'Clay';
+            else soilType = 'Loamy';
+            // map soil type to nutrient suggestions (simple)
+            const nutrientMap = {
+              'Sandy': {nutrients: ['Organic Matter', 'Nitrogen'], suggestion: 'Add compost and nitrogen-rich fertilizer; increase water retention.'},
+              'Clay': {nutrients: ['Phosphorus', 'Potassium'], suggestion: 'Improve drainage, add gypsum or sand; balance pH.'},
+              'Loamy': {nutrients: ['Balanced NPK'], suggestion: 'Maintain organic matter and routine NPK fertilizer as per crop.'}
+            };
+            const res = nutrientMap[soilType];
+            // show to user with localization
+            const loc = {en: soilType, te: (soilType==='Sandy'?'బడివేలు':soilType==='Clay'?'మట్టివేలు':'లూమీ'), hi: (soilType==='Sandy'?'रेतीली मिट्टी':soilType==='Clay'?'चिनाई मिट्टी':'लौमी मिट्टी')};
+            const soilNameLocalized = loc[currentLang] || soilType;
+            const output = `
+              <div><strong>Soil Type:</strong> ${soilNameLocalized} (${soilType})</div>
+              <div><strong>Avg Color (RGB):</strong> ${r}, ${g}, ${b}</div>
+              <div><strong>Suggested Nutrients:</strong> ${res.nutrients.join(', ')}</div>
+              <div><strong>Suggestion:</strong> ${res.suggestion}</div>
+            `;
+            soilResult.innerHTML = output;
+            speakAndShow(`${soilType} soil detected. ${res.suggestion}`);
+          }catch(err){
+            soilResult.textContent = 'Unable to analyze image. Please try a clearer photo.';
+            console.error(err);
+          }
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    /******************************
+     * Assistant: Speech recognition + TTS
+     ******************************/
+    // TTS helper
+    function speak(text){
+      try{
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = (currentLang==='en'?'en-US':currentLang==='te'?'te-IN':'hi-IN');
+        window.speechSynthesis.cancel(); // stop previous
+        window.speechSynthesis.speak(utter);
+      }catch(e){
+        console.warn('TTS not supported', e);
+      }
+    }
+
+    // show assistant output and speak
+    function speakAndShow(text){
+      assistantOut.textContent = text;
+      speak(text);
+    }
+
+    // Simple simulated AI answer logic (text-only, no external calls)
+    function assistantAnswer(query){
+      // normalize
+      const q = query.toLowerCase();
+      // simple rules:
+      if(q.includes('crop') || q.includes('plant')){
+        const month = parseInt(monthSelect.value,10);
+        const crops = cropByMonth[month] || [];
+        return `Recommended crops for selected month: ${crops.join(', ')}`;
+      }
+      if(q.includes('soil')){
+        return soilResult.textContent || 'Upload a soil image to get simulated analysis.';
+      }
+      if(q.includes('drone')){
+        return 'Drone farming uses maps and sensors for precision spraying and crop monitoring.';
+      }
+      if(q.includes('irrig') || q.includes('water')){
+        return 'Automated irrigation saves water by using sensors and schedules.';
+      }
+      // fallback
+      return 'This is a demo assistant. Try asking about crops, soil or drones.';
+    }
+
+    // Speech recognition (Web Speech API)
+    let recognition = null;
+    let listening = false;
+    if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SR();
+      recognition.lang = 'en-IN';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.onresult = function(ev){
+        const text = ev.results[0][0].transcript;
+        userInput.value = text;
+        handleQuery(text);
+      };
+      recognition.onerror = function(ev){
+        console.error(ev);
+        speakAndShow('Speech recognition error');
+      };
+      recognition.onend = function(){ listening = false; micBtn.setAttribute('aria-pressed','false'); micBtn.textContent = '🎤'; };
+    } else {
+      micBtn.disabled = true;
+      micBtn.title = 'Speech recognition not supported in this browser';
+    }
+
+    micBtn.addEventListener('click', ()=>{
+      if(!recognition) return;
+      if(!listening){
+        try{
+          recognition.lang = (currentLang==='en'?'en-IN':currentLang==='te'?'te-IN':'hi-IN');
+          recognition.start();
+          listening = true; micBtn.setAttribute('aria-pressed','true'); micBtn.textContent = '● Rec';
+        }catch(e){
+          console.error(e);
+        }
+      }else{
+        recognition.stop();
+      }
+    });
+
+    askBtn.addEventListener('click', ()=>{
+      const q = userInput.value.trim();
+      if(!q){ speakAndShow(localize('Please type or speak your question.')); return; }
+      handleQuery(q);
+    });
+
+    function handleQuery(q){
+      const reply = localize(assistantAnswer(q));
+      speakAndShow(reply);
+    }
+
+    // localize English text into currentLang if possible (naive)
+    function localize(text){
+      if(currentLang === 'en') return text;
+      // very simple word mapping for demo only
+      const map = {
+        'Recommended crops for selected month:':'ఎంచుకున్న నెలకు సూచించిన పంటలు:', // te
+        'This is a demo assistant. Try asking about crops, soil or drones.':'ఈ డెమో సహాయకుడు. పంటలు, మట్టి లేదా డ్రోన్ గురించి అడగండి.',
+        'Upload a soil image to get simulated analysis.':'సిమ్యులేటెడ్ విశ్లేషణ కోసం మట్టి చిత్రం అప్లోడ్ చేయండి.',
+        'Drone farming uses maps and sensors for precision spraying and crop monitoring.':'డ్రోన్ వ్యవసాయం ఖచ్చిత స్ప్రెయింగ్ మరియు పంట పరిశీలన కొరకు మ్యాప్లు మరియు సెన్సర్లు ఉపయోగిస్తుంది.',
+        'Automated irrigation saves water by using sensors and schedules.':'స్వయంచాలక నీరు ప్రసరణ సెన్సర్లు మరియు షెడ్యూల్స్ ద్వారా నీటినికొనుడిస్తుంది.'
+      };
+      if(currentLang === 'te'){
+        for(const k in map) text = text.replace(k, map[k]);
+        return text;
+      }
+      // Hindi mapping (very small)
+      if(currentLang === 'hi'){
+        const mapHi = {
+          'Recommended crops for selected month:':'चयनित महीने के लिए अनुशंसित फसलें:',
+          'This is a demo assistant. Try asking about crops, soil or drones.':'यह एक डेमो सहायक है। फसलों, मिट्टी या ड्रोन के बारे में पूछें।',
+          'Upload a soil image to get simulated analysis.':'नकली विश्लेषण प्राप्त करने के लिए मिट्टी की छवि अपलोड करें।',
+          'Drone farming uses maps and sensors for precision spraying and crop monitoring.':'ड्रोन खेती सटीक छिड़काव और फसल निगरानी के लिये मानचित्र और सेंसर का उपयोग करता है।',
+          'Automated irrigation saves water by using sensors and schedules.':'सेंसर और शेड्यूल का उपयोग करके स्वचालित सिंचाई पानी बचाती है।'
+        };
+        let out = text;
+        for(const k in mapHi) out = out.replace(k, mapHi[k]);
+        return out;
+      }
+      return text;
+    }
+
+    /******************************
+     * Modal functions
+     ******************************/
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    const modalClose = document.getElementById('modalClose');
+    function openModal(type){
+      let html = '';
+      if(type==='drone') html = `<h3>Drone Farming</h3><p>Drone mapping, pest detection and precision spraying. Drones reduce manual work and improve accuracy.</p>`;
+      if(type==='irri') html = `<h3>Automated Irrigation</h3><p>Use sensor triggers to start irrigation only when needed. Save water and improve crop health.</p>`;
+      modalContent.innerHTML = html;
+      modal.style.display = 'grid'; modal.setAttribute('aria-hidden','false');
+      modalClose.focus();
+    }
+    modalClose.addEventListener('click', closeModal);
+    function closeModal(){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); }
+
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+    /******************************
+     * Utility & UI helpers
+     ******************************/
+    function scrollTo(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    function speakAndShowRaw(s){
+      assistantOut.textContent = s;
+      speak(s);
+    }
+    function speakAndShow(s){
+      // optional localization attempt
+      const localized = localize(s);
+      assistantOut.textContent = localized;
+      speak(localized);
+    }
+    function localize(s){
+      // pass-through to the earlier localized function for replies
+      if(currentLang==='en') return s;
+      // try replacements (reuse assistant localize)
+      return (function(text){
+        if(currentLang === 'te'){
+          const m = {
+            'Please type or speak your question.':'దయచేసి మీ ప్రశ్న టైప్ లేదా మాట్లాడండి.',
+            'Demo requested! (This is a frontend-only demo)':'డెమో అభ్యర్థించబడింది! (ఇది ఫ్రంట్‌ఎండ్ డెమో మాత్రమే)'
+          };
+          for(const k in m) text = text.replace(k, m[k]);
+          return text;
+        }
+        if(currentLang === 'hi'){
+          const m = {
+            'Please type or speak your question.':'कृपया अपना प्रश्न टाइप या बोलें।',
+            'Demo requested! (This is a frontend-only demo)':'डेमो अनुरोध किया गया! (यह केवल फ्रंटएंड डेमो है)'
+          };
+          for(const k in m) text = text.replace(k, m[k]);
+          return text;
+        }
+        return text;
+      })(s);
+    }
+
+    // Request demo button
+    document.getElementById('requestDemo').addEventListener('click', ()=>{
+      const msg = localize('Demo requested! (This is a frontend-only demo)');
+      alert(msg);
+    });
+
+    // initial assistant greeting in chosen language
+    speakAndShow(localize('Welcome to AgriTech demo. Ask about crops, soil or drones.'));
+
+    /******************************
+     * Small safety: fallback when SpeechSynthesis doesn't allow many voices
+     ******************************/
+    // nothing else required
+
+  </script>
+</body>
+</html>
